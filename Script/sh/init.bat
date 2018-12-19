@@ -1,0 +1,472 @@
+:: ============================================================================= ::
+:: 子仓库初始化
+:: 单分支方案
+::
+:: 将此脚本和Script目录一起复制到子仓库根目录。
+:: 注： 通常情况，此脚本运行完毕会删除自身
+::
+:: 存放目录： ./Script/sh 
+:: 运行目录： ./ 
+:: 
+:: 支持大文件(LFS)
+:: ============================================================================= ::
+
+
+:: ===================================变量预处理========================================== ::
+:: 关闭回显
+@echo off
+:: 开启变量延迟
+setlocal enabledelayedexpansion
+:: 设置颜色
+color 0A
+
+:: 调试开关
+set debug=0
+
+:: 当前文件名
+set this=%0
+
+:: 存储感叹号 ! 
+set "T=^!"
+
+:: cd跳转到根目录(因为当前存放目录：./Script/sh，所以需要更改)
+cd %~dp0
+cd..
+cd..
+:: 设置根目录路径
+set root=%cd%
+:: 设置当前脚本路径
+set thispath=%~dp0
+
+
+if %debug%==1 echo ------------------------ 简易日期时间和时间戳  ----------------------
+
+:: 日期分隔符
+set delim=-
+
+:: 日期处理( 2018-12-10 )
+for /f "tokens=1-4  delims=/ " %%a in ("%date%") do (
+	set _de=%%a%delim%%%b%delim%%%c
+	set de=%%a%%b%%c
+	set week=%%d
+)
+:: 时间处理( 21:43:58 )
+for /f "tokens=1-4  delims=:." %%a in ("%time%") do (
+	set _ti=%%a:%%b:%%c
+	set ti=%%a%%b%%c
+)
+
+:: 当前日期时间( 2018-12-10 21:43:58 )
+set "datetime=%_de% %_ti%"
+echo 日期时间："%datetime%"
+
+:: 日期时间 戳( 20181207180016 )
+set deti=%de%%ti%
+:::: 去除所有空格
+set timestamp=%deti: =%
+echo 时间戳："%timestamp%"
+if %debug%==1 echo ------------------------ 简易日期时间和时间戳  ----------------------
+
+
+if %debug%==1 echo ------------------------ 获取目录名  ----------------------
+
+::::::::::::调用示例::::::::::::::::::::::::
+::set spath=DevDocCenter
+::set dpath=DevDocCenter_md
+
+::echo cd: %cd%
+::call :getPath_byStr  %cd%  %spath%  .
+::echo beforePath: %beforePath%
+::echo afterPath: %afterPath%
+::echo beforePathF: %beforePathF%
+::echo afterPathF: %afterPathF%
+::echo cd2: %cd%
+
+set _destDirName=DevDocCenter
+call :getPath_byStr  %root%  %_destDirName%  .
+:: 设置目录名
+set dirname=%afterPathF%
+echo 目录名: %dirname% 
+
+if %debug%==1 echo ------------------------ 获取目录名  ----------------------
+:: ===================================变量预处理========================================== ::
+
+
+
+:: ===================================核心调用及日志处理========================================== ::
+
+:: 日志开关
+set log=1
+:: 日志文件名
+set logName=%dirname%.init.log
+:: 换成 ANSI 代码页,中文字符可以正确识别 
+chcp 936 
+ 
+:: 调用及日志处理
+if %log%==1 (
+	@call :output>%logName%
+) else (
+	call :output
+)
+
+:: 删除本脚本
+::del %0
+exit
+GOTO:EOF
+:: ===================================核心调用及日志处理========================================== ::
+
+
+
+:: ===================================核心代码========================================== ::
+:output
+
+:: ---------------------------------- 预处理  ---------------------------------- ::
+
+:::::::::::::::::::::::::git数据库判断:::::::::::::::::::::::::::::::::::
+:: 存在git数据库，则退出脚本，否则，执行脚本
+IF EXIST .git (
+    echo .git 文件夹存在	
+	exit
+) ELSE (
+    echo 执行操作... 
+)
+:::::::::::::::::::::::::git数据库判断:::::::::::::::::::::::::::::::::::
+
+echo 日期时间：%datetime%
+echo 时间戳：%timestamp%
+echo 目录名: %dirname% 
+
+:::::::::::::::::::::::::特定目录处理:::::::::::::::::::::::::::::::::::
+:: 指定目录不存在，则创建
+IF NOT EXIST "doc/md" ( mkdir "doc/md" )
+IF NOT EXIST "doc/Readme" ( mkdir "doc/Readme" )
+:::::::::::::::::::::::::特定目录处理:::::::::::::::::::::::::::::::::::
+
+
+:::::::::::::::::::::::::空目录处理:::::::::::::::::::::::::::::::::::
+:: 对于空目录，添加 .gitkeep 文件
+
+:: -------------------------------------------------------- ::
+:: for 循环 ('dir /ad /b /s')中的为当前位置下的所有目录全路径的集合。
+:: 如,
+:: E:\share\z
+:: E:\share\xshell
+:: E:\share\cmder
+:: 
+:: for 循环 ('dir "%%i" /a /b')，再次将上面的路径进行dir。
+:: 如果目录为空(即无子目录或文件)，则不会有任何输出。
+:: 则 for /f %%j in ('dir "%%i" /a /b') 为false，不会执行do后面的命令。
+::
+:: set n=0 : 配合 for /f %%j in ('dir "%%i" /a /b')  语句。
+:: for /f %%j in ('dir "%%i" /a /b') 为true，即不是空目录时，n+1
+:: !n! : 必须用!包裹，才能读取 set /a n+=1 中的n
+:: if !n!==0 : 表示上一行语句未执行，即，出现空目录 %%i
+:: 此 %%i 不一定要输出到文件，可灵活应用
+:: -------------------------------------------------------- ::
+for /f "delims=" %%i in ('dir /ad /b /s') do (
+    set n=0
+    for /f %%j in ('dir "%%i" /a /b') do ( set /a n+=1 )
+    if !n!==0 echo git空目录处理 >%%i\.gitkeep
+)
+:::::::::::::::::::::::::空目录处理:::::::::::::::::::::::::::::::::::
+
+
+
+:: ---------------------------------- 预处理  ---------------------------------- ::
+
+
+echo ------------------------ 仓库配置  ------------------------ 
+
+echo 初始化仓库...
+git init
+
+echo 配置用户名...
+git config user.name "kuma8866"
+
+echo 配置邮箱... 
+git config user.email "kuma8866@163.com" 
+
+echo 配置提交缓存...
+git config http.postBuffer  524288000   
+
+echo 添加远程仓库...
+git remote add origin https://github.com/KumaDocCenter/%dirname%.git
+
+
+echo ------------------------ 仓库配置  ------------------------ 
+
+:: bat怎样把<>&等符号输出到文件里
+:: 特殊符号前面加^
+:: echo #include ^<stdio.h^> >.1.txt
+:: 输出空白 echo.
+:: echo.  >>.gitignore
+:: 用了setlocal EnableDelayedExpansion 后!就变特殊了,输出不了，
+:: 所以需要提前保存！在变量中。
+
+
+echo ------------------------START: Commit_0  ------------------------ 
+:: 提交空白仓库，只包含 .gitignore 文件
+
+echo 输出 .gitignore...
+echo /start.bat >>.gitignore
+echo !T!.gitignore >>.gitignore
+
+echo 添加到暂存...
+git add .gitignore
+
+echo git提交...
+git commit -m "Commit_0 : init"
+
+echo ------------------------END: Commit_0  ------------------------ 
+
+
+
+echo ------------------------START: Commit_1  ------------------------ 
+::  增加所有文件
+
+echo 输出 .gitignore...
+echo .DS_Store >.gitignore
+echo Thumbs.db >>.gitignore
+echo /start.bat >>.gitignore
+echo !T!.gitignore >>.gitignore
+echo !T!.gitattributes >>.gitignore
+echo !T!**/.gitkeep >>.gitignore
+echo !T!**/*.exe >>.gitignore
+echo !T!*.exe >>.gitignore
+
+echo 复制 .gitattributes... 
+xcopy  %thispath%.gitattributes   %root%\  /Y
+
+echo 添加到暂存...
+git add .
+
+echo git提交...
+git commit -m "Commit_1 : + All file"
+
+echo ------------------------END: Commit_1  ------------------------ 
+
+
+echo ------------------------ 复制钩子  ------------------------
+:: 放置最后，避免不必要的触发
+:: 只适用于子模块，子仓库不需要此钩子
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+:: 设置钩子名称
+REM set hookname=post-commit
+:: 存在则备份
+REM if exist ".git\hooks\%hookname%"  (
+REM 	ren .git\hooks\%hookname%   %hookname%.%timestamp%  
+REM )
+:: 复制钩子
+REM xcopy  Script\hook\SubRepo\%hookname%   .git\hooks\  /Y
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: 
+
+echo ------------------------ 复制钩子  ------------------------
+
+
+echo ------------------------ YAML输出  ------------------------
+
+
+:: 调用脚本
+call %~dp0YAMLwrite.bat
+
+echo 添加到暂存...
+git add .
+
+echo git提交...
+git commit -m "Commit_3 : + md's YAML"
+
+
+echo ------------------------ YAML输出  ------------------------
+
+echo ------------------------ 配置输出  ------------------------
+
+call  :outSubModule_Config  %dirname%  %timestamp%  "%datetime%" add
+call  :outSubModule_Config  %dirname%  %timestamp%  "%datetime%" init
+call  :outSubModule_Config  %dirname%  %timestamp%  "%datetime%" update
+call  :outSubModule_Config  %dirname%  %timestamp%  "%datetime%" del
+
+echo.
+echo ------------------------ 配置输出  ------------------------
+
+echo ########################## 查看结果 ##########################
+echo.
+git branch -v
+
+echo -----------------------------------------------------------
+
+git log
+echo.
+echo ########################## 查看结果 ##########################
+
+
+:: ===================================核心代码========================================== ::
+
+
+
+
+GOTO:EOF
+:: ================================================== ::
+:: 函数名称：getPath_byStr							  ::
+:: 函数功能：获取路径(字符串替换方法) 				  ::
+:: 函数参数：arg1: 传入cd路径 						  ::
+::           	   用于复位(K:\DevDocCenter\Ajax\doc) ::
+::           arg2: 目标目录名 		  				  ::
+::           	   用于匹配(DevDocCenter)	 		  ::
+::         [arg3]: 路径分隔符 		  				  ::
+::           	   用于格式化路径			 		  ::
+:: 返回值： 									 	  ::
+:: 	   %beforePath% :  前路径				  		  ::
+:: 		  			   如，K:\DevDocCenter			  ::
+:: 		%afterPath% :  后路径				  		  ::
+:: 		  			   如，Ajax\doc					  ::
+:: 	  %beforePathF% :  格式化前路径				   	  ::
+:: 		  			   如，K:.DevDocCenter 			  ::
+:: 	   %afterPathF% :  格式化后路径				 	  ::
+:: 		  			   如，Ajax.doc		  	 		  ::
+:: ================================================== ::
+:getPath_byStr
+if %debug%==1 echo Localtion: %this%: %~0 .................
+if %debug%==1 echo ---arg0: %~0 
+if %debug%==1 echo ---arg1: %~1 
+if %debug%==1 echo ---arg2: %~2 
+if %debug%==1 echo ---arg3: %~3 
+if %debug%==1 echo ---arg4: %~4 
+if %debug%==1 echo ---arg5: %~5
+if %debug%==1 echo ---arg6: %~6 
+if %debug%==1 echo ---arg7: %~7 
+if %debug%==1 echo ---arg8: %~8
+if %debug%==1 echo ---arg9: %~9
+if %debug%==1 echo Localtion: %this%: %~0 .................
+
+
+:: 传入cd路径
+set inCD=%~1
+:: 目标目录名
+set DestDirName=%~2
+:: 路径分隔符
+set Pdelim=%~3
+
+:: 当前cd目录名
+set ThisDirName=
+
+:: 跳转到传入cd
+cd %inCD%
+
+:: 示例： K:\DevDocCenter\Ajax\doc
+
+:getDocRoot_Loop
+:: EQU - 等于 
+if "!ThisDirName!" EQU "%DestDirName%" ( 
+	REM 前路径
+	REM K:\DevDocCenter
+	set beforePath=%cd%
+)
+
+:: EQU - 等于 
+if "!ThisDirName!" EQU "%DestDirName%" (	
+	REM 后路径( 前路径\ 替换为空 )
+	REM Ajax\doc
+	set afterPath=!inCD:%beforePath%\=!
+	
+	REM  NEQ - 不等于
+	if "%delim%" NEQ "" (
+		REM	格式化路径
+		set beforePathF=!beforePath:\=%Pdelim%!
+		set afterPathF=!afterPath:\=%Pdelim%!
+	)
+	
+	REM cd复位
+	cd %inCD%
+	GOTO:EOF
+)
+
+:: 跳转到上级目录
+cd..
+:: 遍历获取目录名
+for %%i in ("!cd!\.") do (
+  if %debug%==1 echo 文件夹: %%~ni
+  set ThisDirName=%%~ni
+)
+
+GOTO getDocRoot_Loop
+GOTO:EOF
+
+
+
+GOTO:EOF
+:: ================================================== ::
+:: 函数名称：outSubModule_Config					  ::
+:: 函数功能：输出子模块配置文件						  ::
+:: 函数参数：arg1: 子模块名			 	  			  ::
+::                 子模块相对路径			 		  ::
+::           arg2: 时间戳 						  	  ::
+::           arg3: 日期时间						  	  ::
+::           arg4: 输出文件类型					  	  ::
+::                 值(add | init | update | del)	  ::
+:: 返回值： 									 	  ::
+:: 													  ::
+:: ================================================== ::
+:outSubModule_Config
+
+::::::::::参数接收::::::::::::::::
+set "_dirname=%~1"
+set "_timestamp=%~2"
+set "_datetime=%~3"
+set "_type=%~4"
+::::::::::参数接收::::::::::::::::
+
+
+::::::::::变量配置::::::::::::::::
+set "dn=%_dirname%.%_timestamp%.%_type%"
+set git=https://github.com/KumaDocCenter/%_dirname%.git
+set name=%_dirname%
+set branch=master
+set branchs=master
+set "init_date=%_datetime%"
+set sh=
+set sh2=
+
+REM %~dp0 : K:\...\Script\sh\
+:: EQU - 等于
+if "%_type%" EQU "add" (
+	 set "sh=Script\sh\submodule_hanlde.bat"
+)
+:: EQU - 等于
+if "%_type%" EQU "init" (
+	 set "sh=Script\sh\submodule_hanlde.bat"
+)
+::::::::::变量配置::::::::::::::::
+
+if %debug%==1 echo ------------------------ 输出子模块配置文件  ------------------------
+echo ###################################################### >%dn%
+echo #  子模块批处理配置文件 >>%dn%
+echo #  后缀   		作用 >>%dn%
+echo # .add        添加子模块 >>%dn%	
+echo # .init	      初始化子模块 >>%dn%
+echo # .update	  更新子模块 >>%dn%
+echo # .del		  删除子模块 >>%dn%
+echo #------------------------------------------------ >>%dn%
+echo #  git        :  git 地址 >>%dn%
+echo #  name       :  子模块名称 >>%dn%
+echo #  branch     :  子模块分支 >>%dn%
+echo #  branchs    :  子模块所有分支  >>%dn%
+echo #  init_date  :  子模块初始化时间 >>%dn%
+echo #  sh  	   	  :  待执行的额外脚本 路径 >>%dn%
+echo #  sh2  	  :  待执行的额外脚本 路径 >>%dn%
+echo ###################################################### >>%dn%
+echo git=%git%>>%dn%
+echo name=%name%>>%dn%
+echo branch=%branch%>>%dn%
+echo branchs=%branchs%>>%dn%
+echo init_date=%init_date%>>%dn%
+echo sh=%sh%>>%dn%
+echo sh2=%sh2%>>%dn%
+
+echo. 
+echo 用于子模块的配置文件已生成，请尽快转移文件
+echo [ %dn% ]
+echo.
+if %debug%==1 echo ------------------------ 输出子模块配置文件  ------------------------
+GOTO:EOF
+
+

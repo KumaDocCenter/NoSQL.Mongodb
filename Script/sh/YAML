@@ -1,0 +1,12 @@
+---
+title: {{title}}
+date: {{date}}
+updated: {{date}} 
+mathjax: false
+categories: 
+tags:
+typora-root-url: {{dot}}
+typora-copy-images-to: {{dot}}
+top: 
+---
+

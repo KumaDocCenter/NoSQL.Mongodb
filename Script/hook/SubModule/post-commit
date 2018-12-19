@@ -1,0 +1,54 @@
+#!/bin/sh
+
+# /bin/sh
+# /usr/bin/env cmd 
+
+#=================================================#
+# git 提交钩子
+# useway=1 ：调用并执行其它脚本代码
+# useway=0 ：执行当前脚本代码
+#
+#=================================================#
+
+# 使用方式
+useway=0
+
+
+
+if [ "$useway" = "1" ]; then
+	### 调用脚本 ###
+
+	# 复制脚本
+	cp ./Script/sh/write_copy_status.bat  ./write_copy_status.bat
+
+	# 添加内容
+	echo :: 删除脚本自身>>./write_copy_status.bat
+	echo "del %0">>./write_copy_status.bat
+
+	# 执行脚本
+	./write_copy_status.bat  $@
+
+else
+	### 当前脚本 ###
+	
+	# 获取根目录名称
+	dir_path=$(pwd)
+	dir_name="${dir_path##*/}"
+
+	# 获取子模块git数据库路径
+	for line in `cat .git`
+	do
+		gitdir=$line
+		gitdir=${gitdir#*:}
+	done
+	
+	#如果文件夹不存在，创建文件夹
+	if [ ! -d $gitdir"/myconf" ]; then
+	  mkdir $gitdir/myconf
+	fi
+
+	# 写入状态数据
+	echo status=1>$gitdir/myconf/copy.conf
+	echo dirname=$dir_name>>$gitdir/myconf/copy.conf
+
+fi

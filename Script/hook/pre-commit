@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# /bin/sh
+# /usr/bin/env cmd 
+
+#=================================================#
+# git 预提交钩子
+# 
+# 
+#
+#=================================================#
+
+
+# 执行脚本
+./Script/sh/repair_public_link.bat
+./Script/sh/ReadConf.bat
+git add .
+exit 0
