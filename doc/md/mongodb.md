@@ -5,8 +5,8 @@ updated: 2018-12-18 12:35:39
 mathjax: false
 categories: 
 tags:
-typora-root-url: .
-typora-copy-images-to: .
+typora-root-url: mongodb
+typora-copy-images-to: mongodb
 top: 
 ---
 
@@ -184,7 +184,7 @@ mysql:
 
 但是GeoJson里面的key-value的key是受到==严格==的限制的，只能使用固定好的key。
 
-![img](assets/wps7F5B.tmp.jpg) 
+![img](wps7F5B.tmp.jpg) 
 
 网站：
 
@@ -224,43 +224,43 @@ mysql:
 
  
 
-![img](assets/wps7F5C.tmp.jpg) 
+![img](wps7F5C.tmp.jpg) 
 
 
 
 2. 上传、解压文件（/usr/local/src**/**）
 
-![img](assets/wps7F6C.tmp.jpg) 
+![img](wps7F6C.tmp.jpg) 
 
 ​	解压安装包
 
-![img](assets/wps7F7D.tmp.jpg) 
+![img](wps7F7D.tmp.jpg) 
 
 ​	然后将mongodb源码移动到上级目录下
 
-![img](assets/wps7F7E.tmp.jpg) 
+![img](wps7F7E.tmp.jpg) 
 
  
 
 3. 为mongodb创建一个==符号链接==
 
-![img](assets/wps7F8F.tmp.jpg) 
+![img](wps7F8F.tmp.jpg) 
 
  
 
 4. 查看一下bin目录的命令
 
-![img](assets/wps7F9F.tmp.jpg) 
+![img](wps7F9F.tmp.jpg) 
 
  
 
 5. 我们通过常看README文件或者帮助命令
 
-![img](assets/wps7FA0.tmp.jpg) 
+![img](wps7FA0.tmp.jpg) 
 
 ​	查看帮助
 
-![img](assets/wps7FB1.tmp.jpg) 
+![img](wps7FB1.tmp.jpg) 
 
  
 
@@ -268,11 +268,11 @@ mysql:
 
    a. 创建db文件夹，保存mongodb运行时候的数据库信息
 
-![img](assets/wps7FC2.tmp.jpg) 
+![img](wps7FC2.tmp.jpg) 
 
 ​	b. 启动服务
 
-![img](assets/wps7FD2.tmp.jpg) 
+![img](wps7FD2.tmp.jpg) 
 
 参数的解释：
 
@@ -286,15 +286,15 @@ mysql:
 
 7. 停止，关闭mongodb，使用kill 命令，不要使用pkill。
 
-![img](assets/wps7FE4.tmp.jpg) 
+![img](wps7FE4.tmp.jpg) 
 
 8. 连接服务端，使用mongo客户端进行连接。
 
-![img](assets/wps7FF4.tmp.jpg) 
+![img](wps7FF4.tmp.jpg) 
 
 9. 简单的使用：只需要遵循js语法，基本都可以使用。能使用的只是ECMAScript定义的函数
 
-![img](assets/wps8005.tmp.jpg) 
+![img](wps8005.tmp.jpg) 
 
  
 
@@ -702,7 +702,7 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
 一般的业务还是查询比较多，写的相当来说少一些。
 
-![img](assets/wps8107.tmp.jpg) 
+![img](wps8107.tmp.jpg) 
 
  
 
@@ -756,27 +756,27 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
 ## mongodb的and操作
 
-![img](assets/wps812B.tmp.jpg) 
+![img](wps812B.tmp.jpg) 
 
 `db.collectionName.find({key1: value1, 'key2': value2});`
 
-![img](assets/wps813B.tmp.jpg) 
+![img](wps813B.tmp.jpg) 
 
 
 
 ## mongodb的or操作
 
-![img](assets/wps813C.tmp.jpg) 
+![img](wps813C.tmp.jpg) 
 
  
 
-![img](assets/wps813D.tmp.jpg) 
+![img](wps813D.tmp.jpg) 
 
  
 
 ## mongodb的and和or
 
-![img](assets/wps814E.tmp.jpg) 
+![img](wps814E.tmp.jpg) 
 
 例如数据库里面存在用户的信息，获取用户的年龄是成年，同时籍贯为湖北或者湖南的。
 
@@ -806,45 +806,45 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
 2. 点击对应的【dll：dynamic link library 动态链接 ，window用来操作mongodb的扩展文件】
 
-![img](assets/wps814F.tmp.jpg) 
+![img](wps814F.tmp.jpg) 
 
  
 
 3. 选择合适的php版本，这个时候需要注意的是，选择版本的时候，存在php线程和非线程安全的选择。
 
-![img](assets/wps8160.tmp.jpg) 
+![img](wps8160.tmp.jpg) 
 
 **线程安全信息如何查看？**
 
 ​	答：使用phpinfo函数，进行查看如下信息
 
-![img](assets/wps8170.tmp.jpg) 
+![img](wps8170.tmp.jpg) 
 
 ​	含义：
 
-![img](assets/wps8171.tmp.jpg) 
+![img](wps8171.tmp.jpg) 
 
  
 
 4. 复制上面压缩包里面的两个文件到php的ext目录
 
-![img](assets/wps8182.tmp.jpg) 
+![img](wps8182.tmp.jpg) 
 
-![img](assets/wps8183.tmp.jpg) 
+![img](wps8183.tmp.jpg) 
 
  
 
 5. 修改php.ini文件，phpinfo查看配置文件所在路径
 
-   ![img](assets/wps8184.tmp.jpg) 
+   ![img](wps8184.tmp.jpg) 
 
-![img](assets/wps8194.tmp.jpg) 
+![img](wps8194.tmp.jpg) 
 
 
 
 6. 必须重启，建立一个phpinfo() ，见到如下信息，表示成功
 
-![img](assets/wps81A5.tmp.jpg) 
+![img](wps81A5.tmp.jpg) 
 
  
 
@@ -864,13 +864,13 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
 1. 上传扩展包到 /usr/local/src
 
-![img](assets/wps81B7.tmp.jpg) 
+![img](wps81B7.tmp.jpg) 
 
  
 
 ​	解压【注意：这个是一个zip包，不需要进行tar方法解压，使用 unzip解压即可】
 
-![img](assets/wps81B8.tmp.jpg) 
+![img](wps81B8.tmp.jpg) 
 
 ​	注意：如果zip命令无法使用，则使用如下的命令进行安装
 
@@ -880,27 +880,27 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
 2. 执行phpize命令
 
-![img](assets/wps81C8.tmp.jpg) 
+![img](wps81C8.tmp.jpg) 
 
 ​	执行上面的操作后，利用生成的configure文件，收集操作系统和php-config命令的信息
 
-![img](assets/wps81C9.tmp.jpg) 
+![img](wps81C9.tmp.jpg) 
 
 3. 执行`make && make install `
 
-![img](assets/wps81DA.tmp.jpg) 
+![img](wps81DA.tmp.jpg) 
 
 4. 执行上面的操作后，会在如下的目录生成一个.so文件
 
-![img](assets/wps81DB.tmp.jpg) 
+![img](wps81DB.tmp.jpg) 
 
 5. 修改php.ini
 
-![img](assets/wps81DC.tmp.jpg) 
+![img](wps81DC.tmp.jpg) 
 
 6. 在test.php里面使用 phpinfo函数测试
 
-![img](assets/wps81ED.tmp.jpg) 
+![img](wps81ED.tmp.jpg) 
 
  
 
@@ -908,7 +908,7 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
    下面的这个语法是：php5.3里面的 pdo链接方式 dsn: data source name
 
-![img](assets/wps81EE.tmp.jpg) 
+![img](wps81EE.tmp.jpg) 
 
  
 
@@ -944,7 +944,7 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 
 效果：
 
-![img](assets/wps81FE.tmp.jpg) 
+![img](wps81FE.tmp.jpg) 
 
  
 
@@ -967,7 +967,7 @@ find和findOne都是用来做数据查询的，但是find是显示所有的数�
 1. 自己是否存在短的域名
 2. 使用第三方的API进行生成【短网址最先从新浪的微博演变过来的，因为微博在设计的时候，只能发送140个文字】
 
-![img](assets/wps8210.tmp.jpg) 
+![img](wps8210.tmp.jpg) 
 
 
 
@@ -986,7 +986,7 @@ api文档：<http://open.weibo.com/wiki/Short_url/shorten>
 1. 成为新浪的开发者【身份证信息】
 2. 创建应用（获取到appkey）
 
-![img](assets/wps8220.tmp.jpg) 
+![img](wps8220.tmp.jpg) 
 
 appkey： **752547878**
 
@@ -994,7 +994,7 @@ appkey： **752547878**
 
 3. 根据文档进行接口调用，提供了两种方式的url请求
 
-![img](assets/wps8231.tmp.jpg) 
+![img](wps8231.tmp.jpg) 
 
 a) xml格式数据
 
@@ -1004,7 +1004,7 @@ b) json格式的数据
 
 http://api.t.sina.com.cn/short_url/shorten.json?source=752547878&url_long=http://open.weibo.com/wiki/Short_url/shorten
 
-![img](assets/wps8232.tmp.jpg) 
+![img](wps8232.tmp.jpg) 
 
  
 
@@ -1033,13 +1033,13 @@ http://api.t.sina.com.cn/short_url/shorten.json?source=752547878&url_long=http:/
 	十六进制 FFFFFF F   16^6
 	六十二进制 62^6  
 
-![img](assets/wps8243.tmp.jpg) 
+![img](wps8243.tmp.jpg) 
 
 使用6位的62进制最多可以表示出500多亿种状态。
 
 
 
-![img](assets/wps8244.tmp.jpg) 
+![img](wps8244.tmp.jpg) 
 
 **使用62进制在处理的时候，不能体现出规律性**。则我们需要设计出一个自己的码表。之前我们使用的16进制，可以使用 0-9 A-F 来表示10进制的 0-15 这个16个数，则现在我们的62进制，则也需要使用62个字符来表示我们10进制的0-61。
 
@@ -1097,7 +1097,7 @@ A-Z：26个字符
 
    <http://www.runoob.com/mongodb/mongodb-autoincrement-sequence.html>
 
-![img](assets/wps8254.tmp.jpg) 
+![img](wps8254.tmp.jpg) 
 
 演示：
 
@@ -1119,11 +1119,11 @@ A-Z：26个字符
 
   定义码表 
 
-![1536910478920](assets/1536910478920.png)
+![1536910478920](1536910478920.png)
 
 转换函数
 
-![1536910497867](assets/1536910497867.png)
+![1536910497867](1536910497867.png)
 
 
 
@@ -1133,37 +1133,37 @@ A-Z：26个字符
 
 1. 创建一个 输入长网址转换为短网址的页面
 
-![img](assets/wps829A.tmp.jpg) 
+![img](wps829A.tmp.jpg) 
 
 效果
 
-![1536911578689](assets/1536911578689.png)
+![1536911578689](1536911578689.png)
 
  
 
 2. 完成页面的ajax提交事件
 
-![1536913844373](assets/1536913844373.png)
+![1536913844373](1536913844373.png)
 
 3. 复制按钮
 
    a) 复制静态资源到z.cn目录
 
-![1536913886975](assets/1536913886975.png)
+![1536913886975](1536913886975.png)
 
 ​	b) 在index.html页面修改短网址框的val值 和 点击复制按钮的ID，并引入插件包
 
-![1536913914046](assets/1536913914046.png)
+![1536913914046](1536913914046.png)
 
 引入插件并定义复制函数
 
-![1536913938083](assets/1536913938083.png)
+![1536913938083](1536913938083.png)
 
  
 
 在完成ajax请求后进行复制函数调用
 
-![1536913976415](assets/1536913976415.png)
+![1536913976415](1536913976415.png)
 
 
 
@@ -1171,23 +1171,23 @@ A-Z：26个字符
 
 1. 在function.php定义好进制转换函数
 
- ![1536914096593](assets/1536914096593.png)
+ ![1536914096593](1536914096593.png)
 
 在后台op.php生成短网址和长网址的映射关系
 
-![1536914020696](assets/1536914020696.png)
+![1536914020696](1536914020696.png)
 
 
 
 2. 如果存在则直接返回
 
-![1536914034810](assets/1536914034810.png)
+![1536914034810](1536914034810.png)
 
  
 
 3. 不存在则生成
 
-![1536914056393](assets/1536914056393.png)
+![1536914056393](1536914056393.png)
 
 
 
@@ -1195,31 +1195,31 @@ A-Z：26个字符
 
 1. 定义伪静态规则，开启Apache的rewrite模块
 
-![img](assets/wps82F2.tmp.jpg) 
+![img](wps82F2.tmp.jpg) 
 
  
 
 2. 开启虚拟主机的重写
 
-![img](assets/wps8303.tmp.jpg) 
+![img](wps8303.tmp.jpg) 
 
  
 
 3. 在网站根目录创建.htaccess文件
 
-![img](assets/wps8304.tmp.jpg) 
+![img](wps8304.tmp.jpg) 
 
  
 
 内容如下：
 
-![1536915532909](assets/1536915532909.png)
+![1536915532909](1536915532909.png)
 
 
 
 5. 在b.cn/s目录创建一个index.php完成跳转
 
-![1536915512675](assets/1536915512675.png)
+![1536915512675](1536915512675.png)
 
  
 

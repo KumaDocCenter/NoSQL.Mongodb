@@ -5,8 +5,8 @@ updated: 2018-12-18 12:35:39
 mathjax: false
 categories: 
 tags:
-typora-root-url: .
-typora-copy-images-to: .
+typora-root-url: mongodb案例
+typora-copy-images-to: mongodb案例
 top: 
 ---
 
@@ -33,7 +33,7 @@ top:
 
 效果：
 
-![img](assets/wps81FE.tmp.jpg) 
+![img](wps81FE.tmp.jpg) 
 
  
 
@@ -56,7 +56,7 @@ top:
 1. 自己是否存在短的域名
 2. 使用第三方的API进行生成【短网址最先从新浪的微博演变过来的，因为微博在设计的时候，只能发送140个文字】
 
-![img](assets/wps8210.tmp.jpg) 
+![img](wps8210.tmp.jpg) 
 
 
 
@@ -75,7 +75,7 @@ api文档：<http://open.weibo.com/wiki/Short_url/shorten>
 1. 成为新浪的开发者【身份证信息】
 2. 创建应用（获取到appkey）
 
-![img](assets/wps8220.tmp.jpg) 
+![img](wps8220.tmp.jpg) 
 
 appkey： **752547878**
 
@@ -83,7 +83,7 @@ appkey： **752547878**
 
 3. 根据文档进行接口调用，提供了两种方式的url请求
 
-![img](assets/wps8231.tmp.jpg) 
+![img](wps8231.tmp.jpg) 
 
 a) xml格式数据
 
@@ -93,7 +93,7 @@ b) json格式的数据
 
 http://api.t.sina.com.cn/short_url/shorten.json?source=752547878&url_long=http://open.weibo.com/wiki/Short_url/shorten
 
-![img](assets/wps8232.tmp.jpg) 
+![img](wps8232.tmp.jpg) 
 
  
 
@@ -122,13 +122,13 @@ http://api.t.sina.com.cn/short_url/shorten.json?source=752547878&url_long=http:/
 	十六进制 FFFFFF F   16^6
 	六十二进制 62^6  
 
-![img](assets/wps8243.tmp.jpg) 
+![img](wps8243.tmp.jpg) 
 
 使用6位的62进制最多可以表示出500多亿种状态。
 
 
 
-![img](assets/wps8244.tmp.jpg) 
+![img](wps8244.tmp.jpg) 
 
 **使用62进制在处理的时候，不能体现出规律性**。则我们需要设计出一个自己的码表。之前我们使用的16进制，可以使用 0-9 A-F 来表示10进制的 0-15 这个16个数，则现在我们的62进制，则也需要使用62个字符来表示我们10进制的0-61。
 
@@ -186,7 +186,7 @@ A-Z：26个字符
 
    <http://www.runoob.com/mongodb/mongodb-autoincrement-sequence.html>
 
-![img](assets/wps8254.tmp.jpg) 
+![img](wps8254.tmp.jpg) 
 
 演示：
 
@@ -208,11 +208,11 @@ A-Z：26个字符
 
   定义码表 
 
-![1536910478920](assets/1536910478920.png)
+![1536910478920](1536910478920.png)
 
 转换函数
 
-![1536910497867](assets/1536910497867.png)
+![1536910497867](1536910497867.png)
 
 
 
@@ -222,37 +222,37 @@ A-Z：26个字符
 
 1. 创建一个 输入长网址转换为短网址的页面
 
-![img](assets/wps829A.tmp.jpg) 
+![img](wps829A.tmp.jpg) 
 
 效果
 
-![1536911578689](assets/1536911578689.png)
+![1536911578689](1536911578689.png)
 
  
 
 2. 完成页面的ajax提交事件
 
-![1536913844373](assets/1536913844373.png)
+![1536913844373](1536913844373.png)
 
 3. 复制按钮
 
    a) 复制静态资源到z.cn目录
 
-![1536913886975](assets/1536913886975.png)
+![1536913886975](1536913886975.png)
 
 ​	b) 在index.html页面修改短网址框的val值 和 点击复制按钮的ID，并引入插件包
 
-![1536913914046](assets/1536913914046.png)
+![1536913914046](1536913914046.png)
 
 引入插件并定义复制函数
 
-![1536913938083](assets/1536913938083.png)
+![1536913938083](1536913938083.png)
 
  
 
 在完成ajax请求后进行复制函数调用
 
-![1536913976415](assets/1536913976415.png)
+![1536913976415](1536913976415.png)
 
 
 
@@ -260,23 +260,23 @@ A-Z：26个字符
 
 1. 在function.php定义好进制转换函数
 
- ![1536914096593](assets/1536914096593.png)
+ ![1536914096593](1536914096593.png)
 
 在后台op.php生成短网址和长网址的映射关系
 
-![1536914020696](assets/1536914020696.png)
+![1536914020696](1536914020696.png)
 
 
 
 2. 如果存在则直接返回
 
-![1536914034810](assets/1536914034810.png)
+![1536914034810](1536914034810.png)
 
  
 
 3. 不存在则生成
 
-![1536914056393](assets/1536914056393.png)
+![1536914056393](1536914056393.png)
 
 
 
@@ -284,31 +284,31 @@ A-Z：26个字符
 
 1. 定义伪静态规则，开启Apache的rewrite模块
 
-![img](assets/wps82F2.tmp.jpg) 
+![img](wps82F2.tmp.jpg) 
 
  
 
 2. 开启虚拟主机的重写
 
-![img](assets/wps8303.tmp.jpg) 
+![img](wps8303.tmp.jpg) 
 
  
 
 3. 在网站根目录创建.htaccess文件
 
-![img](assets/wps8304.tmp.jpg) 
+![img](wps8304.tmp.jpg) 
 
  
 
 内容如下：
 
-![1536915532909](assets/1536915532909.png)
+![1536915532909](1536915532909.png)
 
 
 
 5. 在b.cn/s目录创建一个index.php完成跳转
 
-![1536915512675](assets/1536915512675.png)
+![1536915512675](1536915512675.png)
 
  
 
