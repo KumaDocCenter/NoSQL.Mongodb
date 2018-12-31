@@ -1,5 +1,5 @@
 ---
-title: NoSQL.Mongodb 索引
+title: Index
 mathjax: false
 categories:
   - Dev
@@ -9,7 +9,7 @@ typora-copy-images-to: index
 date: 2018-12-29 15:06:21
 updated: 2018-12-29 15:06:21
 tags:
-top:
+top: 0
 ---
 
 
